@@ -24,6 +24,17 @@ void print(const std::vector<std::string>& names)
 
 int main()
 {
+
+    int someNumber;
+    someNumber = 5;
+    Calculator t800;
+    t800.currentNumber = 10;
+    //non-static methods REQUIRE an object
+    int result = t800.minus(7, 2);
+    //IF the method is static, you don't need the object to call it
+    double multResult = Calculator::mult(2, 5);
+
+
     Console::ResizeWindow(150, 30);
     DataReader dataReader;
     //
