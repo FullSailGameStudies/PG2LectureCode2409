@@ -4,10 +4,11 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include "FullSailCourse.h"
+#include <iomanip>
 
 bool postFix(std::string& hero)
 {
-    srand((unsigned int)time(NULL));
     int postFixNumber = rand() % 1000;
     hero = hero + "-" + std::to_string(postFixNumber);
     return postFixNumber % 2 == 0;
@@ -38,6 +39,13 @@ void printInfo(const std::vector<int>& scores)
 
 int main()
 {
+    srand((unsigned int)time(NULL));
+
+    FullSailCourse pg2;
+    std::string className = "PG2";
+    std::string& currentClass = className;
+    pg2.SetName(className);
+    //pg2.SetName("SPR");
     /*
         ╔══════════════════════════════╗
         ║Parameters: Pass by Reference.║
@@ -56,12 +64,22 @@ int main()
     /*
         CHALLENGE 1:
 
-            Write a method to fill the vector of floats with grades.
+            Write a method to FullSailCourse to fill the vector of floats with grades.
+            GetGrades
             1) pass it in by reference
-            2) add 10 grades to the vector
+            2) add 10 grades to the vector in the method
+            3) in main, print the grades
 
     */
     std::vector<float> grades;
+    //call GetGrades
+    pg2.GetGrades(grades);
+    //print the vector
+    std::cout << "\nPG2 Grades 2409\n";
+    for (int i = 0; i < grades.size(); i++)
+    {
+        std::cout << std::setw(9) << std::right << grades[i] << "\n";
+    }
 
 
 
