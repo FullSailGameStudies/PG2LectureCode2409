@@ -7,9 +7,9 @@
 #include "FullSailCourse.h"
 #include <iomanip>
 
-bool postFix(std::string& hero)
+bool postFix(std::string& hero, int postFixNumber = 1)
 {
-    int postFixNumber = rand() % 1000;
+    //int postFixNumber = rand() % 1000;
     hero = hero + "-" + std::to_string(postFixNumber);
     return postFixNumber % 2 == 0;
 }
@@ -45,7 +45,8 @@ int main()
     std::string className = "PG2";
     std::string& currentClass = className;
     pg2.SetName(className);
-    //pg2.SetName("SPR");
+    pg2.SetName("SPR");
+    pg2.SetName();//the method will then use the default name ("PG2")
     /*
         ╔══════════════════════════════╗
         ║Parameters: Pass by Reference.║
@@ -92,10 +93,61 @@ int main()
         This is the way you pass by reference and prevent the method from changing the variable.
     */
     std::vector<int> highScores;
+    highScores.reserve(10);
+    printInfo(highScores);//size: 0   capacity: 10? 
     for (int i = 0; i < 10; ++i)
-        highScores.push_back(rand());
+    {
+        highScores.push_back(rand() % 5000);
+        printInfo(highScores);//size:   capacity:
+    }
     float avg = average(highScores);
 
+    std::cout << "BEFORE\n";
+    print(highScores);
+    //erase every score < 2500
+    for (size_t i = 0; i < highScores.size(); i++)
+    {
+        if (highScores[i] < 2500)
+        {
+            highScores.erase(highScores.begin() + i);
+            i--;
+        }
+    }
+    //OR...    
+    for (size_t i = 0; i < highScores.size(); )
+    {
+        if (highScores[i] < 2500)
+        {
+            highScores.erase(highScores.begin() + i);
+        }
+        else
+        {
+            i++;//only increment i when we don't erase
+        }
+    }
+    //OR...  
+    for (int i = highScores.size() - 1; i >= 0; i--)
+    {
+        if (highScores[i] < 2500)
+        {
+            highScores.erase(highScores.begin() + i);
+        }
+    }
+    //OR...
+    for (auto iter = highScores.begin(); iter != highScores.end(); )
+    {
+        if ((*iter) < 2500)
+        {
+            iter = highScores.erase(iter);
+        }
+        else 
+        {
+            iter++;
+        }
+    }
+    std::cout << "\nAFTER\n";
+    print(highScores);
+    std::cout << "\nAFTER\n";
 
 
     /*
