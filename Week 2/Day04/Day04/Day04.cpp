@@ -17,8 +17,14 @@ std::string toUpper(const std::string& original)
 
 void recursiveLoop(int N)
 {
-    recursiveLoop(N + 1);
-}
+    //ALL recursive loops need an EXIT CONDITION
+    if (N < 10)
+    {
+        std::cout << N << "\n";
+        recursiveLoop(N + 1);
+        std::cout << N << "\n";
+    }
+}//return
 
 unsigned long factorial(unsigned int N)
 {
@@ -26,8 +32,72 @@ unsigned long factorial(unsigned int N)
     return N * factorial(N - 1);
 }
 
+/*
+            procedure bubbleSort(A : list of sortable items)
+              n := length(A)
+              repeat
+                  swapped := false
+                  for i := 1 to n - 1 inclusive do
+                      if A[i - 1] > A[i] then
+                          swap(A, i - 1, i)
+                          swapped = true
+                      end if  }
+                  end for }
+                  n := n - 1
+              while swapped
+            end procedure }
+*/
+
+void bubbleSort(std::vector<std::string>& unsorted)
+{
+    int numberOfItems = unsorted.size();
+    bool swapped;
+    do
+    {
+        swapped = false;
+        for (int i = 1; i <= numberOfItems-1; ++i)
+        {
+            //_stricmp: 
+            //  < 0 LESS THAN
+            //  = 0 EQUAL TO
+            //  > 0 GREATER THAN
+            int compResult = _stricmp(unsorted[i - 1].c_str(), unsorted[i].c_str());
+            if (compResult > 0)//unsorted[i - 1] > unsorted[i])
+            {
+                std::swap(unsorted[i - 1], unsorted[i]);
+                swapped = true;
+            }
+        }
+        --numberOfItems;
+    } while (swapped);
+}
+
 int main()
 {
+
+    std::vector<std::string> names = { "Wonder Woman", "Superman", "Batman", "Flash", "Aquaman" };
+
+    std::string first = names.front();
+    first = names[0];
+    first = names.at(0);
+    first = *(names.begin());
+
+    //print the sorted vector.
+    std::cout << "\nUNSORTED:\n";
+    for (auto& name : names)
+        std::cout << name << "\n";
+
+    //call your BubbleSort on the names vector.
+    bubbleSort(names);
+
+    //print the sorted vector.
+    std::cout << "\nSORTED:\n";
+    for (auto& name : names)
+    {
+        std::cout << name << "\n";
+    }
+
+
     /*
         ╔═════════╗
         ║Recursion║
@@ -38,6 +108,10 @@ int main()
         All recursive methods need an exit condition, something that prevents the loop from continuing.
 
     */
+    for (size_t n = 0; n < 10; n++)
+    {
+        //if(n < 10) the loop will continue
+    }
     int N = 0;
     recursiveLoop(N);
 
@@ -137,11 +211,4 @@ int main()
             end procedure
 
     */
-    std::vector<std::string> names = { "Wonder Woman", "Superman", "Batman", "Flash", "Aquaman" };
-    //call your BubbleSort on the names vector.
-
-
-    //print the sorted vector.
-    for (auto& name : names)
-        std::cout << name << "\n";
 }
