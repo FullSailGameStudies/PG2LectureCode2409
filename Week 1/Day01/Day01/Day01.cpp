@@ -25,6 +25,12 @@ void print(const std::vector<std::string>& names)
 
 int main()
 {
+    std::vector<std::string> students = {
+        "Brianna", "David", "Joshua", "Victor",
+        "Valenco", "Matthew", "Malcolm", "Terry",
+        "Andrew"
+    };
+    double product = Calculator::multiply(5, 3);
     Menu cafe;
     cafe.AddMenuItem("Chicken Curry");
     cafe.AddMenuItem("Chocolate Pudding");

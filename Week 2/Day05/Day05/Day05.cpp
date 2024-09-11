@@ -5,11 +5,34 @@
 #include <string>
 #include <map>
 #include <vector>
+#include <iomanip>
 
 enum class Weapon
 {
     Sword, Axe, Spear, Mace
 };
+
+const int NOT_FOUND = -1;
+
+/// <summary>
+/// Performs a linear search on the vector parameter.
+/// </summary>
+/// <param name="nums">Vector to search.</param>
+/// <param name="numberToSearchFor">The number to find.</param>
+/// <returns>-1 if not found. The index if found.</returns>
+int LinearSearch(const std::vector<int>& nums, int numberToSearchFor)
+{
+    //start at the beginning
+    for (int i = 0; i < nums.size(); i++)
+    {
+        //look for the search #
+        if (numberToSearchFor == nums[i])
+        {
+            return i;//return the index
+        }
+    }
+    return NOT_FOUND;//-1 means NOT FOUND
+}
 
 
 int main()
@@ -34,9 +57,18 @@ int main()
                 4) if reach the end of the vector, return -1 which means not found
 
     */
+    //N = 7 or the size of numbers
     std::vector<int> numbers = { 0,1,2,3,4,5,6 };
-    int searchNumber = 15;
-
+    int searchNumber = 0;
+    int foundIndex = LinearSearch(numbers, searchNumber);
+    if (foundIndex == NOT_FOUND)
+    {
+        std::cout << searchNumber << " was not found in the vector.\n";
+    }
+    else
+    {
+        std::cout << searchNumber << " was found at index " << foundIndex << "\n";
+    }
 
 
     /*
@@ -61,6 +93,57 @@ int main()
         1) using the insert method.
         2) using [key] = value
     */
+    std::map<std::string, double> menu;
+    menu["Curry Eggs"] = 14.99;
+    menu["Bacon"] = 6.99;
+    menu["Bacon"] = 7.99;//overwrites the existing value
+
+
+    //pairs have 2 members: first and second
+    //map pairs: first is the key and second is the value
+    std::pair<std::string, double> menuPair =
+        std::make_pair<std::string, double>("Coffee",3.99);
+    auto result = menu.insert(menuPair);//will NOT overwrite if the key is already there
+    //pairs have 2 members: first and second
+    //insert pair: 
+    //  first is the iterator to the map's key-value pair
+    //  second is the bool telling you if the pair was inserted or not
+    if (result.second)
+        std::cout << "The menu item was inserted.\n";
+    else
+        std::cout << "The menu item was already on the menu.\n";
+
+    std::string itemName = "Bacon";
+    //double price = menu[itemName];
+    //std::cout << itemName << " costs " << price << "\n";
+    //itemName = "Breakfast Burrito"; 
+    //price = menu[itemName];//????
+    auto foundMenuItemIter = menu.find(itemName);
+    if (foundMenuItemIter == menu.end()) //not found
+        std::cout << itemName << " is not on the menu.\n";
+    else
+    {
+        //menu[itemName] *= 1.05;wasted effort b/c we already found the key
+        double oldPrice = foundMenuItemIter->second;
+        foundMenuItemIter->second *= 1.05;
+        std::cout << itemName << " used to costs " << oldPrice << "\n";
+        std::cout << itemName << " now costs " << menu[itemName] << "!!\n Thanks Putin!\n";
+    }
+
+    //DO NOT ASSUME the key is in the map and use [key] to lookup the value
+    //DO NOT LOOP to find a key
+    //for (auto& [name, menuprice] : menu)
+    //{
+    //    if(name == itemName){}
+    //}
+
+    std::pair<std::string, int> myEnum;
+    myEnum.first = "YELLOW";
+    myEnum.second = 2;
+
+
+
+
     std::map<Weapon, int> dorasBackpack;//will store the counts of each kind of weapon
 
     //returns an iterator and a bool. 
@@ -78,11 +161,42 @@ int main()
     /*
         CHALLENGE:
 
-            Create a map that stores names (string) and grades. Call the variable grades.
+            Create a map that stores names (string) and numerical grades. 
+            Call the variable grades.
             Add students and grades to your map.
 
     */
+    srand(time(NULL));
+    std::map<std::string, double> grades;
+    std::vector<std::string> students = {
+        "Brianna", "David", "Joshua", "Victor",
+        "Valenco", "Matthew", "Malcolm", "Terry",
+        "Andrew", "Aquaman"
+    };
+    for (auto& name : students)
+    {
+        grades[name] = (rand() % 10001) / 100.0;
+    }
 
+    std::cout << "\n\nPG2 Grades 2409\n";
+    auto iter = grades.begin();
+    while (iter != grades.end())
+    {
+        //first is the key, second is the value
+        const std::string& name = iter->first;
+        double& grade = iter->second;
+        std::cout << std::setw(10) << std::left << name;
+        std::cout << std::setw(7) << std::right << grade << "\n";
+        ++iter;
+    }
+
+
+    std::cout << "\n\nPG2 Grades 2409\n";
+    for (auto& [name,grade] : grades)
+    {
+        std::cout << std::setw(10) << std::left << name;
+        std::cout << std::setw(7) << std::right << grade << "\n";
+    }
 
 
 

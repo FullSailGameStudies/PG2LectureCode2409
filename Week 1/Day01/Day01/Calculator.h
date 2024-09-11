@@ -13,6 +13,6 @@ public:
 
 	int Add(int , int );
 
-	static double mult(double num, double factor);
+	static double multiply(double num, double factor);
 };
 

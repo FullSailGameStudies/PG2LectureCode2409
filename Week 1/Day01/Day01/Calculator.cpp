@@ -13,7 +13,7 @@ int Calculator::Add(int num1, int num2)
 }
 
 
-double Calculator::mult(double num, double factor)
+double Calculator::multiply(double num, double factor)
 {
 	return num * factor;
 }
