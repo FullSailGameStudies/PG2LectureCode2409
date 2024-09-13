@@ -12,3 +12,16 @@ private:
 	std::vector<std::string> menuItems;
 };
 
+class Person
+{
+public:
+	void SetAge(int age = 12);
+
+private:
+	int age_;
+};
+
+void Person::SetAge(int age)
+{
+	age_ = age;
+}
