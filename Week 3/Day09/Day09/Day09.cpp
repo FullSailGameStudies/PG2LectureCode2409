@@ -2,6 +2,8 @@
 //
 
 #include <iostream>
+#include "Pistol.h"
+#include <vector>
 
 
 class base
@@ -31,6 +33,59 @@ public:
 
 int main()
 {
+	int number = 5;
+	int& refNumber = number;//declares a reference variable
+	//when & is used with the type of the var, it is a reference
+	//	EX: when declaring a variable or a parameter
+	//when & is used on the right-hand side of an expression, it is the address-of.
+	int* pNumber = &number;//gets the address-of a variable
+	std::cout << pNumber << "\t" << *pNumber << "\n";
+
+	Pistol pewpew(50, 100, 10, 5);
+
+	//Heap memory
+	Pistol* pPistol = new Pistol(50, 100, 10, 5);
+	Pistol* currentPistol = pPistol;
+	//releases the Heap memory back to the runtime
+	//to be used for something else
+	delete pPistol;
+	//int damage = pPistol->calcDamage();//????
+	pPistol = nullptr;
+	//int damage = pPistol->calcDamage();//????
+	//std::cout << damage;
+
+	//make_unique method
+	{  //local scope
+		std::unique_ptr<Pistol> uPistol =
+			std::make_unique<Pistol>(50, 100, 10, 5);
+
+		Pistol banger(1, 2, 3, 4);
+		banger.showMe();//passing &banger as the 'this'
+		Weapon wpn = banger;//copies the OBJECT
+		wpn.showMe();
+		std::vector<Weapon> wpns;
+		wpns.push_back(banger);//copies to a weapon object
+
+		//UPCASTING --
+		//	casting from a DERIVED type to a BASE type
+		//	EX: casting from a Pistol to a Weapon
+		//	when using pointers, you do NOT lose the original object
+		std::unique_ptr<Pistol> uPistol2 = std::move(uPistol);//now uPistol no longer owns the memory
+		std::vector<std::unique_ptr<Weapon>> inventory;
+		inventory.push_back(std::move(uPistol2));//UPCASTING the pointer
+		inventory.push_back(std::make_unique<Weapon>(10, 5));
+		inventory.push_back(std::make_unique<Pistol>(10, 5, 3, 2));//UPCASTING the pointer
+		inventory.push_back(std::make_unique<Pistol>(100, 50, 30, 20));//UPCASTING the pointer
+		for (size_t i = 0; i < inventory.size(); i++)
+		{
+			inventory[i]->showMe();
+			std::cout << "\n";
+		}
+		//uPistol->calcDamage();
+	}//uPistol is deleted and cleaned up
+	std::cin.get();
+
+
 
 	/*
 		╔════════════╗
@@ -47,7 +102,8 @@ int main()
 		This is ALWAYS safe.
 
 
-		To maintain the original object, we need a pointer though. If not, then we're just calling the copy constructor of the base class and lose all the info of the derived.
+		To maintain the original object, we need a p
+		pointer though. If not, then we're just calling the copy constructor of the base class and lose all the info of the derived.
 
 		Unique pointers owns and manages an object through a pointer.
 		std::unique_ptr<derived> pDerived = std::make_unique<derived>("Gotham", 5);

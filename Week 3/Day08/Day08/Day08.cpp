@@ -6,10 +6,24 @@
 #include "Inheritance.h"
 #include "Polymorphism.h"
 #include "Car.h"
+#include "FlyingCar.h"
+#include "Pistol.h"
+#include <vector>
 
+
+void Looper()
+{
+	static int i = 0;
+	std::cout << i << "\n";
+	i++;
+}
 
 int main()
 {
+	for (size_t i = 0; i < 10; i++)
+	{
+		Looper();
+	}
 	/*
         ╔═══════════════╗
         ║  Inheritance  ║
@@ -39,8 +53,25 @@ int main()
 			Lecture Code: add a FlyingCar class that derives from Car
              
     */
+	Car myCar(1985,"Ford", "Mustang GT");
+	Car wifesCar(2015, "Ford", "GT");
 
+	myCar.refuel();
+	wifesCar.refuel(5);
+	wifesCar.refuel(3.5F);
 
+	//base ctors is called first
+	//then the derived ctor is called
+	FlyingCar delorean(2025,"Tesla","Cyberplane",5000,120);
+
+	std::vector<Car> myGarage;
+	myGarage.push_back(delorean);//??? we'll need POINTERS!!! to make this work
+
+	std::cout << "G's Garage\n";
+	std::cout << myCar.vehicleInformation() << "\n" << wifesCar.vehicleInformation();
+	std::cout << "\n" << delorean.vehicleInformation() << "\n";
+
+	//Weapon knife(3, 10);
 
 	/*
         ╔*************╗
@@ -48,10 +79,14 @@ int main()
         ╚*************╝
 
             add a new class, Pistol, that derives from Weapon.
-            Pistol should have fields with getters/setters for rounds and magCapacity.
+            Pistol should have fields with getters/setters 
+				for rounds and magCapacity.
             Add a constructor that calls the base constructor
 	
 	*/
+	Pistol pewpew(100,50,10,15);
+	Pistol throwAway(10, 10, 5, 10);
+	pewpew = pewpew + throwAway;
 
 
 
